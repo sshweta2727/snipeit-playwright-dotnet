@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
-    <File Path="README.txt" />
+    <File Path="README.md" />
     <File Path="test.runsettings" />
   </Folder>
   <Project Path="snipeit.Tests/snipeit.Tests.csproj" />
