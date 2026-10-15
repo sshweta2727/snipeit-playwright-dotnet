@@ -1,6 +1,7 @@
-﻿using System.Text.RegularExpressions;
-using snipeit.Tests.Pages;
+﻿using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
+using snipeit.Tests.Pages;
+using System.Text.RegularExpressions;
 
 namespace snipeit.Tests
 {
@@ -12,6 +13,7 @@ namespace snipeit.Tests
             var loginPage = new LoginPage(Page);
             var dashboardPage = new DashBoardPage(Page);
             var createAssetPage = new CreateAsset(Page);
+            var assetsListPage = new AssetsListPage(Page);
 
             // Unique asset tag for this run, e.g. SK-20261015213045
             var assetTag = $"Sweta's Macbook Pro-{DateTime.Now:yyyyMMddHHmmss}";
@@ -44,7 +46,19 @@ namespace snipeit.Tests
             await Expect(successMessage).ToContainTextAsync("created successfully");
             await Expect(successMessage).ToContainTextAsync(assetTag);
 
-            await Page.PauseAsync();
+            // Find the asset in the assets list
+            await assetsListPage.SearchAsync(assetTag);
+
+            // Check: our asset appears in the results
+            await Expect(Page.GetByRole(AriaRole.Link, new() { Name = assetTag, Exact = true })).ToBeVisibleAsync();
+
+            // Open the asset page from the list
+            await assetsListPage.OpenAssetAsync(assetTag);
+
+            // Check: we're on the asset's own page, e.g. /hardware/2609
+            await Expect(Page).ToHaveURLAsync(new Regex(@"/hardware/\d+"));
+
+            // await Page.PauseAsync();
         }
     }
 }
