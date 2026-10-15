@@ -1,4 +1,6 @@
-# Snipe-IT Automation Project using Playwright and latest version of .net
+# Snipe-IT Automation Project using Playwright and .NET 10
+
+Built with .NET 10, Playwright for .NET 1.63 and NUnit.
 
 ## What the test does
 
@@ -18,6 +20,8 @@ There are also two smaller login tests in `LoginTests`.
 snipeit.Automation/
 ├── test.runsettings          # browser, headed/headless and speed settings
 └── snipeit.Tests/
+    ├── Config/
+    │   └── TestSettings.cs   # URL and login settings
     ├── Pages/                # page objects, one per screen
     │   ├── LoginPage.cs
     │   ├── DashBoardPage.cs
@@ -44,7 +48,7 @@ I used the Page Object Model so each screen's locators and actions live in one p
 ```
    dotnet build
 ```
-3. Install the Playwright browser
+3. Install the Playwright browser:
 ```
    pwsh snipeit.Tests/bin/Debug/net10.0/playwright.ps1 install chromium
 ```
@@ -64,6 +68,14 @@ Or in Visual Studio: Test > Configure Run Settings > Select Solution Wide runset
 <SlowMo>0</SlowMo>
 ```
 
+## Configuration
+
+The site URL and login details are in `Config/TestSettings.cs`. By default they use the public demo (admin / password). To run against another Snipe-IT site, set these environment variables:
+
+- `SNIPEIT_URL`
+- `SNIPEIT_USER`
+- `SNIPEIT_PASSWORD`
+
 ## Notes on test data
 
 - The demo site is shared by many people and resets regularly, so the test creates its own data each run instead of relying on existing records.
@@ -73,7 +85,6 @@ Or in Visual Studio: Test > Configure Run Settings > Select Solution Wide runset
 
 ## Things I'd add with more time
 
-- Move URL and credentials into a config file / environment variables
 - Run the tests in a CI pipeline (e.g. GitHub Actions) on each push
 - Pick the company randomly as well, so the test doesn't depend on any fixed sample data
 - Screenshots and Playwright traces on failure
