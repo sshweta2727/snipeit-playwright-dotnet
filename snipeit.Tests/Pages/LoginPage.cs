@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using snipeit.Tests.Config;
 
 namespace snipeit.Tests.Pages
 {
@@ -18,7 +19,7 @@ namespace snipeit.Tests.Pages
 
         public async Task GotoAsync()
         {
-            await _page.GotoAsync("https://demo.snipeitapp.com/");
+            await _page.GotoAsync(TestSettings.BaseUrl);
 
         }
 

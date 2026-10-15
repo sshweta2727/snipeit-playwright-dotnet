@@ -2,10 +2,10 @@
 
 namespace snipeit.Tests.Pages
 {
-    public class CreateAsset
+    public class CreateAssetPage
     {
         private readonly IPage _page;
-        public CreateAsset(IPage page)
+        public CreateAssetPage(IPage page)
         {
             _page = page;
         }

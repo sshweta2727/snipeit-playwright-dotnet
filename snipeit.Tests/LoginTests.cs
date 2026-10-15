@@ -1,6 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.Playwright.NUnit;
+using snipeit.Tests.Config;
 using snipeit.Tests.Pages;
-using Microsoft.Playwright.NUnit;
+using System.Text.RegularExpressions;
 namespace snipeit.Tests
 {
     public class LoginTests : PageTest
@@ -20,7 +21,7 @@ namespace snipeit.Tests
             var loginPage = new LoginPage(Page);
 
             await loginPage.GotoAsync();
-            await loginPage.LoginAsync("testuser", "password");
+            await loginPage.LoginAsync(TestSettings.Username, TestSettings.Password);
             await Expect(Page).Not.ToHaveURLAsync(new Regex("/login"));
 
 
